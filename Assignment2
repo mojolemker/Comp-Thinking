@@ -3,4 +3,60 @@ Assignment 2
 Josef Lemker, Jimmy, Ames Wang
 '''
 
-print("hello")
+from utilities import safe_input
+# Use safe_input instead of Python's builtin input function for error-proof numerical inputs
+# Example 1:
+# value = safe_input("Enter a number: ", "ERROR: Input must be a positive numeric value.", float, 0, None)
+# Example 2:
+# value = safe_input("Enter a number: ", "ERROR: Input must be an integer between 1 and 100.", int, 1, 100)
+
+items = {}
+item_id = 1
+stopper = True
+
+print("Welcome to Grocery Store Inventory Management!")
+
+options = """1. (N) Add a new product
+2. (R) Remove a product
+3. (D) Display a product's inventory
+4. (U) Update a product
+5. (A) Display all products
+6. (V) Calculate total value per category
+7. (S) Search for a product
+8. (O) Display the options
+9. (E) Exit"""
+
+print(options)
+
+while stopper == True:
+
+    inputval = input("Enter Your Choice: ")
+
+    if inputval == 'N' or inputval == 'n' or inputval == '1':
+        desc = {}
+        desc["Name: "] = input("Name: ")
+        desc["Category: "] = input("Category: ")
+        desc["Price: "] = input("Price: ")
+        desc["Quantity: "] = input("Quantity: ")
+        items[item_id] = desc
+        item_id += 1
+        print("Item added successfully!")
+    elif inputval == 'r' or inputval == 'R' or inputval == '2':
+        removal = int(input("Enter the ID of the product to remove: "))
+        if removal in items:
+            del items[removal]
+            print("Item removed successfully!")
+        else:
+            print("Item not found!")
+    elif inputval == 'E':
+        stopper = False
+    
+    
+
+# Set up a dictionary for items
+
+# Write a loop that iterates until the user decides to exit the program
+#    ...
+
+print("Goodbye!")
+print(items)
