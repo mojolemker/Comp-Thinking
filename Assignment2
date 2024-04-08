@@ -1,7 +1,9 @@
-'''
-Assignment 2
-Josef Lemker, Jimmy, Ames Wang
-'''
+# -*- coding: utf-8 -*-
+"""
+Provide a short description of the program here.
+
+Include the group number and the name of group members.
+"""
 
 from utilities import safe_input
 # Use safe_input instead of Python's builtin input function for error-proof numerical inputs
@@ -32,25 +34,60 @@ while stopper == True:
 
     inputval = input("Enter Your Choice: ")
 
-    if inputval == 'N' or inputval == 'n' or inputval == '1':
+   
+    if inputval.lower() == 'n' or inputval == '1':
         desc = {}
         desc["Name: "] = input("Name: ")
         desc["Category: "] = input("Category: ")
-        desc["Price: "] = input("Price: ")
-        desc["Quantity: "] = input("Quantity: ")
+        desc["Price: $"] = safe_input("Price: ", "ERROR: Price must be a positive number.", float, 0)
+        desc["Quantity: "] = safe_input("Quantity: ", "ERROR: Quantity must be a positive integer.", int, 0)
         items[item_id] = desc
         item_id += 1
         print("Item added successfully!")
-    elif inputval == 'r' or inputval == 'R' or inputval == '2':
-        removal = int(input("Enter the ID of the product to remove: "))
+    
+    
+    elif inputval.lower() == 'r' or inputval == '2':
+        if item_id == 1:
+            print("No items to remove")
+            continue
+        removal = safe_input("Enter the ID of the product to remove: ", "ERROR: Not a valid ID", int, 1, item_id - 1)
         if removal in items:
             del items[removal]
             print("Item removed successfully!")
-        else:
-            print("Item not found!")
-    elif inputval == 'E':
+    
+    elif inputval == '3' or inputval.lower() == 'd':
+        if item_id == 1:
+            print("No items to display")
+            continue
+        displayid = safe_input("Enter the ID of the product to display: ", "ERROR: Not a valid ID", int, 1, item_id - 1)
+        tempdict = items[displayid]
+        print(f"ID: {displayid}\nName: {tempdict['Name: ']}\nCategory: {tempdict['Category: ']}\nPrice: ${tempdict['Price: $']}\nQuantitiy: {tempdict['Quantity: ']}")
+        continue
+    
+    elif inputval == '3' or inputval.lower() == 'u':
+        if item_id == 1:
+            print("No items to update")
+            continue
+        updateid = safe_input("Enter the ID of the product to update: ", "ERROR: Not a valid ID", int, 1, item_id - 1)
+        tempdict = items[updateid]
+        newprice = safe_input(f"Enter the new price for '{tempdict['Name: ']}': $", "ERROR: Price must be a positve number.", float, 0)
+        newquant = safe_input(f"Enter the new quantity for '{tempdict['Quantity: ']}': ", "ERROR: Quantity must be a positve integer.", int, 0)
+        tempdict['Price: $'] = newprice
+        tempdict['Quantity: '] = newquant
+        items[updateid] = tempdict
+        continue
+    
+    elif inputval.lower() == 'e' or inputval == '9':
         stopper = False
     
+    
+    elif inputval == '8' or inputval == '0':
+            print(options)
+    
+    
+    else:
+        print("Invalid option entered. Enter 8 or 0 to see the otions.")
+        continue
     
 
 # Set up a dictionary for items
@@ -60,3 +97,4 @@ while stopper == True:
 
 print("Goodbye!")
 print(items)
+            
