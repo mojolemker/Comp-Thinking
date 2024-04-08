@@ -64,7 +64,7 @@ while stopper == True:
         print(f"ID: {displayid}\nName: {tempdict['Name: ']}\nCategory: {tempdict['Category: ']}\nPrice: ${tempdict['Price: $']}\nQuantitiy: {tempdict['Quantity: ']}")
         continue
     
-    elif inputval == '3' or inputval.lower() == 'u':
+    elif inputval == '4' or inputval.lower() == 'u':
         if item_id == 1:
             print("No items to update")
             continue
@@ -77,8 +77,19 @@ while stopper == True:
         items[updateid] = tempdict
         continue
     
+    elif inputval == '5' or inputval.lower() == 'a':
+        if item_id == 1:
+            print("No items to show.")
+            continue
+        print("%-4s%-35s%-18s%-6s%-8s" % ("ID", "Name", "Category", "Price", "Quanity"))
+        for vals in items:
+            tempdict = items[vals]
+            print("%-4s%-35s%-19s%-5s%7s" % (vals, tempdict['Name: '], tempdict['Category: '], tempdict['Price: $'], tempdict['Quantity: ']))
+        continue
+    
     elif inputval.lower() == 'e' or inputval == '9':
         stopper = False
+    
     
     
     elif inputval == '8' or inputval == '0':
