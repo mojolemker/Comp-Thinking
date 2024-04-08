@@ -91,12 +91,17 @@ while stopper == True:
         if removal in items:
             del items[removal]
             print("Item removed successfully!")
+        else:
+            print("Item already removed")
     
     elif inputval == '3' or inputval.lower() == 'd':
         if item_id == 1:
             print("No items to display")
             continue
         displayid = safe_input("Enter the ID of the product to display: ", "ERROR: Not a valid ID", int, 1, item_id - 1)
+        if displayid not in items.keys():
+            print("ID removed")
+            continue
         tempdict = items[displayid]
         print(f"ID: {displayid}\nName: {tempdict['Name: ']}\nCategory: {tempdict['Category: ']}\nPrice: ${tempdict['Price: $']}\nQuantitiy: {tempdict['Quantity: ']}")
         continue
@@ -108,7 +113,7 @@ while stopper == True:
         updateid = safe_input("Enter the ID of the product to update: ", "ERROR: Not a valid ID", int, 1, item_id - 1)
         tempdict = items[updateid]
         newprice = safe_input(f"Enter the new price for '{tempdict['Name: ']}': $", "ERROR: Price must be a positve number.", float, 0)
-        newquant = safe_input(f"Enter the new quantity for '{tempdict['Quantity: ']}': ", "ERROR: Quantity must be a positve integer.", int, 0)
+        newquant = safe_input(f"Enter the new quantity for '{tempdict['Name: ']}': ", "ERROR: Quantity must be a positve integer.", int, 0)
         tempdict['Price: $'] = newprice
         tempdict['Quantity: '] = newquant
         items[updateid] = tempdict
@@ -166,7 +171,7 @@ while stopper == True:
         continue
         
     
-    elif inputval == '8' or inputval == '0':
+    elif inputval == '8' or inputval.lower() == 'o':
             print(options)
     
     elif inputval.lower() == 'e' or inputval == '9':
@@ -198,3 +203,4 @@ fh.write(file_string)
 fh.close()
 
 print("Goodbye!")
+
