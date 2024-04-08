@@ -2,7 +2,15 @@
 """
 Provide a short description of the program here.
 
+We have created a program that allowsusers to add products,
+remove products, update product quantities and prices,
+display the current inventory, calculate the total vlalue
+of different product categories and search for products.
+
+
 Include the group number and the name of group members.
+
+Group 4.1 - Josef Lemker, Jimmy Kalyviaris, Ames Wang
 """
 
 from utilities import safe_input
@@ -88,16 +96,54 @@ while stopper == True:
         continue
     
     elif inputval.lower() == 'v' or inputval == '6':
-        
+        if item_id == 1:
+            print("No items to show.")
+            continue
+            
+        print('%-20s%-20s' % ("Category", "Value"))
+        categories = []
+        for vals in items:
+            tempdict = items[vals]
+            if tempdict['Category: '] not in categories:
+                categories.append(tempdict['Category: '])
+        for cats in categories:
+            catprice = 0
+            catquant = 0
+            for vals in items:
+                tempdict = items[vals]
+                if tempdict['Category: '] == cats:
+                    catprice += tempdict['Price: $']
+                    catquant += tempdict['Quantity: ']
+            print('%-20s$%-20.2f' % (cats, catprice * catquant))
         continue
-    
-    elif inputval.lower() == 'e' or inputval == '9':
-        stopper = False
-    
-    
+                    
+    elif inputval.lower() == 's' or inputval == '7':
+        if item_id == 1:
+            print("No items to show.")
+            continue
+        
+        found = False
+        item_name = input("Enter the name of the product to search: ")
+        for vals in items:
+            tempdict = items[vals]
+            name = tempdict['Name: ']
+            for letters in range(0, len(name) - len(item_name) + 1):
+                tempname = name[letters:len(item_name)]
+                print(tempname)
+                print(len(name))
+                if tempname.lower() == item_name.lower():
+                    print(f"ID: {vals}\nName: {tempdict['Name: ']}\nCategory: {tempdict['Category: ']}\nPrice: ${tempdict['Price: $']}\nQuantity: {tempdict['Quantity: ']}")
+                    found = True
+        if found == False:
+            print(f"No item with name {item_name} was found.")
+        continue
+        
     
     elif inputval == '8' or inputval == '0':
             print(options)
+    
+    elif inputval.lower() == 'e' or inputval == '9':
+        stopper = False
     
     
     else:
@@ -110,6 +156,19 @@ while stopper == True:
 # Write a loop that iterates until the user decides to exit the program
 #    ...
 
+fh = open("inventory.csv", 'w')
+
+
+file_string = ("ID,name,category,price,quantity\n")
+
+
+for vals in items:
+    tempdict = items[vals]
+    file_string +=(f"{vals},{tempdict['Name: ']},{tempdict['Category: ']},{tempdict['Price: $']},{tempdict['Quantity: ']}\n")
+
+fh.write(file_string)
+
+fh.close()
+
 print("Goodbye!")
 print(items)
-            
