@@ -87,6 +87,10 @@ while stopper == True:
             print("%-4s%-35s%-19s%-5s%7s" % (vals, tempdict['Name: '], tempdict['Category: '], tempdict['Price: $'], tempdict['Quantity: ']))
         continue
     
+    elif inputval.lower() == 'v' or inputval == '6':
+        
+        continue
+    
     elif inputval.lower() == 'e' or inputval == '9':
         stopper = False
     
