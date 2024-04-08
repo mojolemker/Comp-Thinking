@@ -14,14 +14,43 @@ Group 4.1 - Josef Lemker, Jimmy Kalyviaris, Ames Wang
 """
 
 from utilities import safe_input
+import os
 # Use safe_input instead of Python's builtin input function for error-proof numerical inputs
 # Example 1:
 # value = safe_input("Enter a number: ", "ERROR: Input must be a positive numeric value.", float, 0, None)
 # Example 2:
 # value = safe_input("Enter a number: ", "ERROR: Input must be an integer between 1 and 100.", int, 1, 100)
 
-items = {}
-item_id = 1
+if os.path.exists('inventory.csv') == True:
+    x = 0
+
+    fh = open('inventory.csv', 'r')
+
+    fh.readline()
+    
+    items = {}
+    item_id = 1
+    
+    for lines in fh:
+        liner = lines.rstrip()
+        line = liner.split(',')
+        
+        desc = {"Name: " : line[1],
+            "Category: " : line[2],
+            "Price: $": float(line[3]),
+            "Quantity: " : int(line[4])
+            }
+        
+        
+        items[item_id] = desc
+        
+        item_id += 1
+
+
+else:
+    items = {}
+    item_id = 1
+    
 stopper = True
 
 print("Welcome to Grocery Store Inventory Management!")
@@ -128,9 +157,7 @@ while stopper == True:
             tempdict = items[vals]
             name = tempdict['Name: ']
             for letters in range(0, len(name) - len(item_name) + 1):
-                tempname = name[letters:len(item_name)]
-                print(tempname)
-                print(len(name))
+                tempname = name[letters : (letters + len(item_name))]
                 if tempname.lower() == item_name.lower():
                     print(f"ID: {vals}\nName: {tempdict['Name: ']}\nCategory: {tempdict['Category: ']}\nPrice: ${tempdict['Price: $']}\nQuantity: {tempdict['Quantity: ']}")
                     found = True
@@ -171,4 +198,3 @@ fh.write(file_string)
 fh.close()
 
 print("Goodbye!")
-print(items)
